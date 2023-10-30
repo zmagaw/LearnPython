@@ -3,7 +3,7 @@ import os
 import hashlib
 
 
-#import pytest
+import pytest
 #import mock
 #import builtins
 
@@ -12,6 +12,35 @@ def greet():
     print("Hello! Welcome to this python tutorial")
     greeting = input("what is your name?")
     return greeting
+
+def readFile():
+    d = {}
+    i = 0
+    with open('temp/usernames.txt','r') as temp_file:
+        for line in temp_file:  
+            lined = {}
+            (name, email, password) = line.split(',')
+            name = name.split(': ')[1]
+            lined['name'] = name
+            print("Name:" + name)
+            email = email.split(': ')[1]
+            lined['email'] = email
+            print("Email:" + email)
+            password = password.split(': ')[1]
+            lined['password'] = password
+            print("Password:" + password)
+            d[i] = lined
+            i+=1
+        print(d)
+    temp_file.close()
+    return d
+
+
+def login():
+
+
+def register():
+
 
 if not os.path.exists("temp") :
     os.mkdir("temp")
@@ -23,25 +52,7 @@ print(os.listdir())
 #os.system('touch usernames.txt')
 #temp_file = open('temp/usernames.txt','a')
 
-d = {}
-i = 0
-with open('temp/usernames.txt','r') as temp_file:
-    for line in temp_file:  
-       lined = {}
-       (name, email, password) = line.split(',')
-       name = name.split(': ')[1]
-       lined['name'] = name
-       print("Name:" + name)
-       email = email.split(': ')[1]
-       lined['email'] = email
-       print("Email:" + email)
-       password = password.split(': ')[1]
-       lined['password'] = password
-       print("Password:" + password)
-       d[i] = lined
-       i+=1
 
-print(d)
 #This the running program that will teach someone how to code python - but not just code python but use opther tooling and uibld process
 
 
