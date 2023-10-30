@@ -31,15 +31,68 @@ def readFile():
             print("Password:" + password)
             d[i] = lined
             i+=1
-        print(d)
+            print(d)
     temp_file.close()
     return d
 
+def findUser(usersDict, userEmail):
+    status = False
+    i=0
+    ##Need to think of a way to exit out when found - userFound or end of Dict
+    for user in usersDict:
+        userDict = usersDict[user]
+        for key in userDict:
+            #print(str(i) + "---" + key + ": " + userDict[key])
+            if userDict['email'] == userEmail:
+                status=True
+        i+=1
+    return status
+
+def validateUser(usersDict, userEmail, userPassword):
+    status = False
+    i=0
+    ##Need to think of a way to exit out when found - userFound or end of Dict
+    for user in usersDict:
+        userDict = usersDict[user]
+        for key in userDict:
+            #print(str(i) + "---" + key + ": " + userDict[key])
+            if userDict['email'] == userEmail and userDict['password'] == userPassword:
+                status=True
+        i+=1
+    return status
+
+def updateFile(usersDict):
+    status = False
+    i=0
+    for user in usersDict:
+        userDict = usersDict[user]
+        for key in userDict:
+            print(str(i) + "---" + key + ": " + userDict[key])
+        i+=1
+    return status
 
 def login():
+    status = False
+    return status
 
 
-def register():
+def registerUser(usersDict, userName, userEmail, userPassword):
+    status = False
+
+    
+    if findUser(usersDict, userEmail):
+            print("User all ready exists")    
+        
+        
+    else:
+        print("User is going to be registered")
+        status=True
+        #add user to the file
+        with open('temp/usernames.txt','a') as temp_file:
+            temp_file.write("name: " + userName + ", email: " + userEmail + ", password: " + userPassword + "\n")
+        temp_file.close()
+    return status
+
 
 
 if not os.path.exists("temp") :
@@ -58,6 +111,10 @@ print(os.listdir())
 
 #get users name
 greeting = greet()
+
+usersDict = readFile()
+
+status = updateFile(usersDict)
 
 #will need to prompt user for username / password
 #create an account 
@@ -87,15 +144,17 @@ if choice == "register" :
             passwordSha = hashlib.new('sha3_512')
             password = password.encode('utf-8')
             passwordSha.update(password)
-            temp_file.write("name: " + greeting + ", email: " + email + ", password: " + str(passwordSha.digest()) + "\n")
-
-            
+            status = registerUser(usersDict, greeting, email, str(passwordSha.digest()))
+            if status:
+                print("Zach says " + str(status))
+            else:
+                print("Zachary says " + str(status))
         else :
             print("The passwords do not match or do not minimum criteria please try again.")
     #store the username and password in a file
     print("Thank you " + greeting + " you will now be asked to login.")
 
-temp_file.close()
+#temp_file.close()
 
 #generate reset code that is 6 random characters/case/numbers
 
