@@ -114,7 +114,6 @@ greeting = greet()
 
 usersDict = readFile()
 
-status = updateFile(usersDict)
 
 #will need to prompt user for username / password
 #create an account 
@@ -147,6 +146,8 @@ if choice == "register" :
             status = registerUser(usersDict, greeting, email, str(passwordSha.digest()))
             if status:
                 print("Zach says " + str(status))
+                usersDict = readFile()
+
             else:
                 print("Zachary says " + str(status))
         else :
